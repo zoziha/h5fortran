@@ -1,7 +1,6 @@
 module h5fortran
 !! HDF5 object-oriented polymorphic interface
 
-use, intrinsic :: iso_c_binding, only : c_ptr, c_loc
 use, intrinsic :: iso_fortran_env, only : real32, real64, int64, int32, stderr=>error_unit
 
 use hdf5, only : HID_T, SIZE_T, HSIZE_T, &

@@ -26,7 +26,7 @@ target_link_libraries(test_${name} PRIVATE h5fortran::h5fortran)
 target_compile_options(test_${name} PRIVATE "$<$<Fortran_COMPILER_ID:GNU>:-Wno-compare-reals;-Wno-conversion>")
 set_target_properties(test_${name} PROPERTIES LABELS unit)
 
-if(${name} STREQUAL string_read)
+if(${name} MATCHES "(string_read|string_utf8)")
   add_test(NAME ${name} COMMAND test_${name} ${string_file})
 else()
   add_test(NAME ${name} COMMAND test_${name})
@@ -60,6 +60,9 @@ cmake_path(SET string_file ${CMAKE_CURRENT_BINARY_DIR}/test_string_py.h5)
 set(test_names array attributes cast deflate_write deflate_read deflate_props destructor exist fill
 groups layout lt scalar shape string string_read version write
 fail_read_size_mismatch fail_read_rank_mismatch fail_nonexist_variable)
+if(f03utf8)
+  list(APPEND test_names string_utf8)
+endif()
 
 setup_test("${test_names}")
 
@@ -108,11 +111,6 @@ if(NOT DEFINED h5py_ok)
   endif()
 endif()
 
-set_tests_properties(string_read PROPERTIES
-FIXTURES_REQUIRED h5str
-DISABLED $<NOT:$<BOOL:${h5py_ok}>>
-)
-
 add_test(NAME PythonShape
 COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/test_shape.py ${shape_file}
 )
@@ -132,6 +130,18 @@ FIXTURES_REQUIRED h5lib
 FIXTURES_SETUP h5str
 DISABLED $<NOT:$<BOOL:${h5py_ok}>>
 )
+
+set_tests_properties(string_read PROPERTIES
+FIXTURES_REQUIRED h5str
+DISABLED $<NOT:$<BOOL:${h5py_ok}>>
+)
+
+if(f03utf8)
+  set_tests_properties(string_utf8 PROPERTIES
+  FIXTURES_REQUIRED h5str
+  DISABLED $<NOT:$<BOOL:${h5py_ok}>>
+  )
+endif()
 
 # --- Matlab HDF5
 

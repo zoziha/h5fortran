@@ -1,3 +1,5 @@
+include(CheckSourceCompiles)
+
 # check C and Fortran compiler ABI compatibility
 
 if(NOT abi_ok)
@@ -18,6 +20,13 @@ if(NOT abi_ok)
     )
   endif()
 endif()
+
+# --- UTF8 capable
+check_source_compiles(Fortran
+"program test
+character(kind=selected_char_kind('ISO_10646')) :: x
+end program"
+f03utf8)
 
 # --- compiler options
 # we left off "-std=f2018" type flags as they tend to issue false warnings
