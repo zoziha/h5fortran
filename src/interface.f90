@@ -426,9 +426,9 @@ end interface
 
 interface  !< attributes.f90
 
-module subroutine readattr_char(self, dname, attr, attrval)
+module subroutine readattr_char(self, dset_name, attr_name, attrval)
 class(hdf5_file), intent(in) :: self
-character(*), intent(in) :: dname, attr
+character(*), intent(in) :: dset_name, attr_name
 character(*), intent(inout) :: attrval
 !! intent(inout) for character
 end subroutine

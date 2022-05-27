@@ -68,8 +68,8 @@ if(vstatus) then
     A = cstr(:i)
   end select
 else
-  call H5Tget_strpad_f(type_id, pad_type, ier)
-  if(ier/=0) error stop "ERROR:h5fortran:read:H5Tget_strpad " // trim(dset_name)
+  ! call H5Tget_strpad_f(type_id, pad_type, ier)
+  ! if(ier/=0) error stop "ERROR:h5fortran:read:H5Tget_strpad " // trim(dset_name)
 
   call H5Tget_size_f(type_id, dsize, ier) !< only for non-variable
   if(ier/=0) error stop "ERROR:h5fortran:read:H5Tget_size " // trim(dset_name)
