@@ -11,7 +11,7 @@ integer, parameter :: N(2) = [50, 1000]
 
 
 call test_read_deflate(fn1, N)
-print *,'OK: HDF5 read deflate'
+print *,'OK: read deflate'
 
 contains
 
@@ -20,15 +20,15 @@ subroutine test_read_deflate(fn, N)
 character(*), intent(in) :: fn
 integer, intent(in) :: N(2)
 
-type(hdf5_file) :: h5f
+type(hdf5_file) :: h
 real(real32), allocatable :: A(:,:)
 
 allocate(A(N(1), N(2)))
 
-call h5f%open(fn, action='r')
-call h5f%read('/A', A)
-call h5f%read('/noMPI', A)
-call h5f%close()
+call h%open(fn, action='r')
+call h%read('/A', A)
+call h%read('/noMPI', A)
+call h%close()
 
 end subroutine test_read_deflate
 

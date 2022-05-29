@@ -22,7 +22,7 @@ module procedure readattr_char
 !! NOTE: HDF5 character attributes are scalar.
 character(len(attrval)) :: buf
 
-if(.not.self%exist(dset_name)) error stop 'h5fortran:readattr: dataset not exist: ' // dname // " in " // self%filename
+if(.not.self%exist(dset_name)) error stop 'h5fortran:readattr: dataset not exist: ' // dset_name // " in " // self%filename
 
 call read_scalar_char(self, dset_name, attr_name, buf)
 

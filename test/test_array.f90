@@ -1,21 +1,23 @@
 program array_test
 
 use, intrinsic:: ieee_arithmetic, only: ieee_value, ieee_quiet_nan, ieee_is_nan
-use, intrinsic :: iso_fortran_env, only: real32, real64, int32, stderr=>error_unit
+use, intrinsic:: iso_fortran_env, only: real32, real64, int32, stderr=>error_unit
 use h5fortran, only : hdf5_file, HSIZE_T, H5T_NATIVE_INTEGER
 
 implicit none (type, external)
 
 real(real32) :: nan
 
-call test_basic_array('test_array.h5')
+character(*), parameter :: fn1 = 'test_array.h5', fn2 = 'test_group_array.h5'
+
+call test_basic_array(fn1)
 print *,'PASSED: array write'
-call test_read_slice('test_array.h5')
+call test_read_slice(fn1)
 print *, 'PASSED: slice read'
-call test_write_slice('test_array.h5')
+call test_write_slice(fn1)
 print *, 'PASSED: slice write'
 
-call test_readwrite_array('test_group_array.f90', ng=69, nn=100, pn=5)
+call test_readwrite_array(fn2, ng=69, nn=100, pn=5)
 print *,'PASSED: array write / read'
 
 
@@ -49,7 +51,7 @@ enddo
 r1 = i1
 r2 = i2
 
-call h%open(filename, action='w', comp_lvl=1, verbose=.False.)
+call h%open(filename, action='w', comp_lvl=1)
 
 call h%write('/int32-1d', i1)
 call h%write('/test/group2/int32-2d', i2)
@@ -59,7 +61,7 @@ call h%write('/nan', nan)
 call h%close()
 
 !! read
-call h%open(filename, action='r', verbose=.false.)
+call h%open(filename, action='r')
 
 !> int32
 call h%read('/int32-1d', i1t)
@@ -109,9 +111,10 @@ do i = 1,size(i2,2)
   i2(i,:) = i2(1,:) * i
 enddo
 
-call h%open(filename, action='r')
+call h%open(filename, 'r')
 
 i1t = 0
+print *, '/int32-1d stride read'
 call h%read('/int32-1d', i1t(:2), istart=[2], iend=[3], stride=[1])
 if (any(i1t(:2) /= [2,3])) then
   write(stderr, *) 'read 1D slice does not match. expected [2,3] but got ',i1t(:2)
@@ -119,6 +122,7 @@ if (any(i1t(:2) /= [2,3])) then
 endif
 
 i1t = 0
+print *, '/int32-1d no stride read'
 call h%read('/int32-1d', i1t(:2), istart=[2], iend=[3])
 if (any(i1t(:2) /= [2,3])) then
   write(stderr, *) 'read 1D slice does not match. expected [2,3] but got ',i1t(:2)

@@ -1,14 +1,14 @@
 {
-  "zlib1": {
-    "url": "http://zlib.net/zlib-1.2.12.tar.xz",
-    "sha256": "7db46b8d7726232a621befaab4a1c870f00a90805511c0e0090441dac57def18"
-  },
-  "zlib2": {
-    "url" : "https://github.com/zlib-ng/zlib-ng.git",
-    "tag": "2.0.6"
-  },
-  "hdf5": {
-    "url": "https://github.com/HDFGroup/hdf5.git",
-    "tag": "hdf5-1_12_2"
-  }
+"zlib1": {
+  "url": "http://zlib.net/zlib-1.2.12.tar.xz",
+  "sha256": "7db46b8d7726232a621befaab4a1c870f00a90805511c0e0090441dac57def18"
+},
+"zlib2": {
+  "url" : "https://github.com/zlib-ng/zlib-ng.git",
+  "tag": "2.0.6"
+},
+"hdf5": {
+  "url": "https://github.com/HDFGroup/hdf5.git",
+  "tag": "hdf5-1_12_2"
+}
 }

@@ -25,7 +25,7 @@ integer :: i
 
 if(is_hdf5('apidfjpj-8j9ejfpq984jfp89q39SHf.h5')) error stop 'test_exist: non-existent file declared hdf5'
 
-open(newunit=i, file='not_hdf5.h5', action='write')
+open(newunit=i, file='not_hdf5.h5', action='write', status='replace')
 write(i,*) 'I am not an HDF5 file.'
 close(i)
 
@@ -36,9 +36,9 @@ end subroutine test_is_hdf5
 
 subroutine test_exist(fn)
 
-type(hdf5_file) :: h
-
 character(*), intent(in) :: fn
+
+type(hdf5_file) :: h
 
 call h5write(fn, '/x', 42)
 if(.not.is_hdf5(fn)) error stop 'file does not exist'
